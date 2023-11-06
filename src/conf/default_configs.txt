@@ -1,0 +1,148 @@
+CIFAR-10 default train conf
+{
+    "dataset_name": "cifar10",
+    "input_img_size": [32, 32],
+    "model_name": "resnet",
+    "model_scale": 5,
+    "epochs": 1000,
+    "batchsize": 32,
+    "val_size": 0.1,
+    "lr": 0.01,
+    "transforms": "image",
+    "save_checkpoint_epochs": 1,
+    "eval_test_step": 1,
+    "optimizer": "adamw",
+    "lr_scheduler": "cosine",
+    "weight_decay": 0.0,
+    "log_dir": null,
+    "deterministic_run": true,
+    "seed": 213,
+    "target_class": 0,
+    "duplication_factor": 4,
+    "model_weights": null,
+    "device": "cuda",
+    "warmup_epochs": 10,
+    "num_workers": 0,
+    "path_data": "../data",
+    "dataset_mean": null,
+    "dataset_std": null,
+    "loss_weights": {
+        "weight_sim": 1.0,
+        "weight_shift": 1.0,
+        "weight_cls": 0.0,
+        "weight_norm": 0.0
+    }
+}
+
+MTT default train conf
+{
+    "dataset_name": "mtt_wav",
+    "input_img_size": [128, 128],
+    "model_name": "resnet",
+    "model_scale": 5,
+    "epochs": 500,
+    "batchsize": 32,
+    "val_size": 0.1,
+    "lr": 0.01,
+    "transforms": "wav",
+    "save_checkpoint_epochs": 1,
+    "eval_test_step": 1,
+    "optimizer": "adamw",
+    "lr_scheduler": "cosine",
+    "weight_decay": 0.0,
+    "log_dir": null,
+    "deterministic_run": true,
+    "seed": 213,
+    "target_class": 0,
+    "duplication_factor": 4,
+    "model_weights": null,
+    "device": "cuda",
+    "warmup_epochs": 10,
+    "num_workers": 12,
+    "path_data": "../data/mtt/mtt_wav",
+    "dataset_mean": null,
+    "dataset_std": null,
+    "loss_weights": {
+        "weight_sim": 1.0,
+        "weight_shift": 1.0,
+        "weight_cls": 0.0,
+        "weight_norm": 0.0
+    },
+    "sample_rate": 16000,
+    "sample_len": 43740
+}
+
+CIFAR-10 default dataset evaluation
+{
+    "evaluation_mode": "dataset",
+    "dataset_name": "cifar10",
+    "model_name": "resnet",
+    "model_scale": 5,
+    "input_img_size": [32, 32],
+    "batchsize": 32,
+    "path_checkpoint": "../logs/cifar10_resnet_scale5_lr0.01/last.pth",
+    "transforms": "image",
+    "target_class": 0,
+    "dataset_mean": null,
+    "dataset_std": null,
+    "duplication_factor": 4,
+    "device": "cuda",
+    "num_workers": 0,
+    "path_data": "../data"
+}
+
+Default image evaluation (based on CIFAR-10)
+{
+    "evaluation_mode": "image",
+    "input_img_size": [32, 32],
+    "model_name": "resnet",
+    "model_scale": 5,
+    "path_checkpoint": "../logs/cifar10_resnet_scale5_lr0.01/last.pth",
+    "dataset_mean": [0.5256556272506714, 0.5603305697441101, 0.5889057517051697],
+    "dataset_std": [0.2502190172672272, 0.24083183705806732, 0.2659754455089569],
+    "duplication_factor": 4,
+    "device": "cuda",
+    "path_data": "./example_files/cifar10/dog_0.png"
+}
+
+Default MTT dataset evaluation
+{
+    "evaluation_mode": "dataset",
+    "dataset_name": "mtt_wav",
+    "model_name": "resnet",
+    "model_scale": 5,
+    "duplication_factor": 2,
+    "input_img_size": [128, 128],
+    "batchsize": 1,
+    "path_checkpoint": "../logs/mtt_wav_resnet_scale5_lr0.001/last.pth",
+    "transforms": "wav",
+    "target_class": 0,
+    "device": "cuda",
+    "num_workers": 0,
+    "path_data": "../data/mtt/mtt_wav",
+    "dataset_mean": null,
+    "dataset_std": null,
+    "sample_rate": 16000,
+    "sample_len": 43740
+}
+
+Default audio file evaluation (Based on MTT)
+{
+    "evaluation_mode": "audio_file",
+    "model_name": "resnet",
+    "model_scale": 5,
+    "duplication_factor": 2,
+    "input_img_size": [
+        128,
+        128
+    ],
+    "batchsize": 1,
+    "path_checkpoint": "../logs/mtt_wav_resnet_scale5_lr0.001/last.pth",
+    "transforms": "wav",
+    "target_class": 0,
+    "device": "cuda",
+    "num_workers": 0,
+    "path_data": "./example_files/mtt/techno_0.wav",
+    "sample_rate": 16000,
+    "sample_len": 43740
+}

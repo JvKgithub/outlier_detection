@@ -1,0 +1,19 @@
+{
+    "evaluation_mode": "dataset",
+    "dataset_name": "mtt_wav",
+    "model_name": "resnet",
+    "model_scale": 5,
+    "duplication_factor": 2,
+    "input_img_size": [128, 128],
+    "batchsize": 1,
+    "path_checkpoint": "../logs/mtt_wav_resnet_scale5_lr0.001/last.pth",
+    "transforms": "wav",
+    "target_class": 0,
+    "device": "cuda",
+    "num_workers": 0,
+    "path_data": "../data/mtt/mtt_wav",
+    "dataset_mean": null,
+    "dataset_std": null,
+    "sample_rate": 16000,
+    "sample_len": 43740
+}

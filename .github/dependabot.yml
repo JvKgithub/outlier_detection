@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # Update pip dependencies (located in a root directory)
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 100
+
+  # Configure automatic updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
