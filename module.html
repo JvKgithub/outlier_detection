@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logger module &mdash; Outlier_detection_CSI  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to Outlier_detection_CSI’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Outlier_detection_CSI
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Logger module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#logger_od.logger_od.LoggerOD"><code class="docutils literal notranslate"><span class="pre">LoggerOD</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#logger_od.logger_od.LoggerOD.close"><code class="docutils literal notranslate"><span class="pre">LoggerOD.close()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logger_od.logger_od.LoggerOD.log_conf_json"><code class="docutils literal notranslate"><span class="pre">LoggerOD.log_conf_json()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logger_od.logger_od.LoggerOD.log_scalar"><code class="docutils literal notranslate"><span class="pre">LoggerOD.log_scalar()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#logger_od.logger_od.ScalarAverager"><code class="docutils literal notranslate"><span class="pre">ScalarAverager</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#logger_od.logger_od.ScalarAverager.average"><code class="docutils literal notranslate"><span class="pre">ScalarAverager.average</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logger_od.logger_od.ScalarAverager.update"><code class="docutils literal notranslate"><span class="pre">ScalarAverager.update()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#module-data_setup_od.datasets_od.base_datasets">Data setup module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data_setup_od.datasets_od.base_datasets.BaseDatasetCSI"><code class="docutils literal notranslate"><span class="pre">BaseDatasetCSI</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data_setup_od.datasets_od.base_datasets.BaseDatasetOD"><code class="docutils literal notranslate"><span class="pre">BaseDatasetOD</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data_setup_od.datasets_od.cifar10_od.Cifar10OD"><code class="docutils literal notranslate"><span class="pre">Cifar10OD</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data_setup_od.datasets_od.cifar10_od.Cifar10SingleClassCSI"><code class="docutils literal notranslate"><span class="pre">Cifar10SingleClassCSI</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#data_setup_od.datasets_od.collater_od.collater_rearrange_batch_shifting_transform"><code class="docutils literal notranslate"><span class="pre">collater_rearrange_batch_shifting_transform()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#evaluator-module">Evaluator module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#module-losses_od.losses_od">Losses module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#losses_od.losses_od.NTXentLoss"><code class="docutils literal notranslate"><span class="pre">NTXentLoss</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#losses_od.losses_od.NTXentLoss.forward"><code class="docutils literal notranslate"><span class="pre">NTXentLoss.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#losses_od.losses_od.OdLossTotal"><code class="docutils literal notranslate"><span class="pre">OdLossTotal</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#losses_od.losses_od.OdLossTotal.forward"><code class="docutils literal notranslate"><span class="pre">OdLossTotal.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#model-handler-module">Model handler module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#trainer-module">Trainer module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#utils-module">Utils module</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Outlier_detection_CSI</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Logger module</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/module.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-logger_od.logger_od">
+<span id="logger-module"></span><h1>Logger module<a class="headerlink" href="#module-logger_od.logger_od" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="logger_od.logger_od.LoggerOD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logger_od.logger_od.</span></span><span class="sig-name descname"><span class="pre">LoggerOD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_log_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_log_tensorboard</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_log_txt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_continue_train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logger_od.logger_od.LoggerOD" title="Link to this definition"></a></dt>
+<dd><p>Logging utility for Outlier Detection.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>in_log_dir (str)</dt><dd><p>Path to the logging directory.</p>
+</dd>
+<dt>in_log_tensorboard (bool, optional)</dt><dd><p>Flag to determine if TensorBoard logging is required. Defaults to True. Later specific logs can individually decide to log to tensorboard
+or not.</p>
+</dd>
+<dt>in_log_txt (bool, optional)</dt><dd><p>Flag to determine if logging to txt is required. Defaults to True. Later specific logs can individually decide to log to .txt</p>
+</dd>
+<dt>in_continue_train (bool, optional)</dt><dd><p>Flag to determine whether training is continued, check for empty log dir to avoid overwriting disabled.</p>
+</dd>
+</dl>
+</dd>
+<dt>Raises:</dt><dd><p>FileExistsError: If the logging directory already exists.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="logger_od.logger_od.LoggerOD.close">
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logger_od.logger_od.LoggerOD.close" title="Link to this definition"></a></dt>
+<dd><p>Closes the txt file and TensorBoard writer.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logger_od.logger_od.LoggerOD.log_conf_json">
+<span class="sig-name descname"><span class="pre">log_conf_json</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_conf_dict</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logger_od.logger_od.LoggerOD.log_conf_json" title="Link to this definition"></a></dt>
+<dd><p>Logs a training configuration file as .json in the logging directory.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>in_conf_dict (Dict): Configuration dictionary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logger_od.logger_od.LoggerOD.log_scalar">
+<span class="sig-name descname"><span class="pre">log_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_tag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_epoch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_tensorboard</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_txt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_print</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logger_od.logger_od.LoggerOD.log_scalar" title="Link to this definition"></a></dt>
+<dd><p>Log scalar values. Depending on choice, can be logged to tensorboard, .txt file and the console.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>in_tag (str)</dt><dd><p>Name of the scalar.</p>
+</dd>
+<dt>in_value (float)</dt><dd><p>Value of the scalar.</p>
+</dd>
+<dt>in_epoch (int)</dt><dd><p>Epoch number.</p>
+</dd>
+<dt>in_tensorboard (bool, optional)</dt><dd><p>Whether to log to TensorBoard. Defaults to True.</p>
+</dd>
+<dt>in_txt (bool, optional)</dt><dd><p>Whether to log to txt file. Defaults to True.</p>
+</dd>
+<dt>in_print (bool, optional)</dt><dd><p>Whether to print to stdout. Defaults to True.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="logger_od.logger_od.ScalarAverager">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">logger_od.logger_od.</span></span><span class="sig-name descname"><span class="pre">ScalarAverager</span></span><a class="headerlink" href="#logger_od.logger_od.ScalarAverager" title="Link to this definition"></a></dt>
+<dd><p>Utility to compute the average of scalar values. Mostly used to average losses over a whole epoch.</p>
+<dl class="simple">
+<dt>Attributes:</dt><dd><dl class="simple">
+<dt>sum (float)</dt><dd><p>Sum of the scalar values.</p>
+</dd>
+<dt>count (int)</dt><dd><p>Count of the scalar values.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py property">
+<dt class="sig sig-object py" id="logger_od.logger_od.ScalarAverager.average">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">average</span></span><a class="headerlink" href="#logger_od.logger_od.ScalarAverager.average" title="Link to this definition"></a></dt>
+<dd><p>Compute the average of the scalar values.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>float: The average of the scalar values.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="logger_od.logger_od.ScalarAverager.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_count</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#logger_od.logger_od.ScalarAverager.update" title="Link to this definition"></a></dt>
+<dd><p>Update the sum and count of the scalar values.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>in_value (float)</dt><dd><p>Scalar value.</p>
+</dd>
+<dt>in_count (int)</dt><dd><p>Count of the scalar value.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-data_setup_od.datasets_od.base_datasets">
+<span id="data-setup-module"></span><h1>Data setup module<a class="headerlink" href="#module-data_setup_od.datasets_od.base_datasets" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="data_setup_od.datasets_od.base_datasets.BaseDatasetCSI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">data_setup_od.datasets_od.base_datasets.</span></span><span class="sig-name descname"><span class="pre">BaseDatasetCSI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#data_setup_od.datasets_od.base_datasets.BaseDatasetCSI" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="data_setup_od.datasets_od.base_datasets.BaseDatasetOD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">data_setup_od.datasets_od.base_datasets.</span></span><span class="sig-name descname"><span class="pre">BaseDatasetOD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#data_setup_od.datasets_od.base_datasets.BaseDatasetOD" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class" id="module-data_setup_od.datasets_od.cifar10_od">
+<dt class="sig sig-object py" id="data_setup_od.datasets_od.cifar10_od.Cifar10OD">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">data_setup_od.datasets_od.cifar10_od.</span></span><span class="sig-name descname"><span class="pre">Cifar10OD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#data_setup_od.datasets_od.cifar10_od.Cifar10OD" title="Link to this definition"></a></dt>
+<dd><p>Dataset wrapper for CIFAR-10 for outlier detection tasks. Target class samples are assigned a label 0, while all other classes are labeled as 1.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>in_root (str)</dt><dd><p>Root directory of the CIFAR-10 dataset where dataset exists or will be saved to.</p>
+</dd>
+<dt>in_train (bool)</dt><dd><p>If True, creates dataset from training set, otherwise from test set.</p>
+</dd>
+<dt>in_target_class (int)</dt><dd><p>The class label for the target class.</p>
+</dd>
+<dt>in_transform (Compose)</dt><dd><p>Transformations applied to the images before returning.</p>
+</dd>
+</dl>
+</dd>
+<dt>Attributes:</dt><dd><dl class="simple">
+<dt>dataset (Dataset)</dt><dd><p>The original CIFAR-10 dataset.</p>
+</dd>
+<dt>target_class (int)</dt><dd><p>The target class.</p>
+</dd>
+<dt>transform (Compose)</dt><dd><p>Transformations applied to the images.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="data_setup_od.datasets_od.cifar10_od.Cifar10SingleClassCSI">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">data_setup_od.datasets_od.cifar10_od.</span></span><span class="sig-name descname"><span class="pre">Cifar10SingleClassCSI</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#data_setup_od.datasets_od.cifar10_od.Cifar10SingleClassCSI" title="Link to this definition"></a></dt>
+<dd><p>Dataset wrapper for CIFAR-10 to extract samples from a single target class and apply CSI specific transformations.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>in_root (str)</dt><dd><p>Root directory of the CIFAR-10 dataset where dataset exists or will be saved to.</p>
+</dd>
+<dt>in_train (bool)</dt><dd><p>If True, creates dataset from training set, otherwise from test set.</p>
+</dd>
+<dt>in_target_class (int)</dt><dd><p>The class label for the target class.</p>
+</dd>
+<dt>in_duplication_factor (int)</dt><dd><p>Number of times an image is duplicated.</p>
+</dd>
+<dt>in_pre_shift_transform (Compose)</dt><dd><p>Transformations applied before shifting.</p>
+</dd>
+<dt>in_shift_transform (Callable)</dt><dd><p>Shift transformations applied to the data.</p>
+</dd>
+<dt>in_post_shift_transform (Compose)</dt><dd><p>Transformations applied after shifting.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function" id="module-data_setup_od.datasets_od.collater_od">
+<dt class="sig sig-object py" id="data_setup_od.datasets_od.collater_od.collater_rearrange_batch_shifting_transform">
+<span class="sig-prename descclassname"><span class="pre">data_setup_od.datasets_od.collater_od.</span></span><span class="sig-name descname"><span class="pre">collater_rearrange_batch_shifting_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_duplication_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">torch.Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#data_setup_od.datasets_od.collater_od.collater_rearrange_batch_shifting_transform" title="Link to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Rearranges a batch of data by interleaving duplicated images and their labels. Batch follows this format:</dt><dd><ul class="simple">
+<li><p>A_no_shift_1</p></li>
+<li><p>A_no_shift_2</p></li>
+<li><p>…</p></li>
+<li><p>A_shift_1_1</p></li>
+<li><p>A_shift_1_2</p></li>
+<li><p>…</p></li>
+<li><p>A_shift_2_1</p></li>
+<li><p>A_shift_2_2</p></li>
+<li><p>…</p></li>
+<li><p>B_no_shift_1</p></li>
+<li><p>B_no_shift_2</p></li>
+<li><p>…</p></li>
+<li><p>B_shift_1_1</p></li>
+<li><p>B_shift_1_2</p></li>
+<li><p>…</p></li>
+<li><p>B_shift_2_1</p></li>
+<li><p>B_shift_2_2</p></li>
+</ul>
+</dd>
+</dl>
+<p>A and B are the original image pairs created before the shift transformation step. Duplication factor is three in this example.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>in_data (List[Tuple[torch.Tensor, torch.Tensor]])</dt><dd><p>Input data consisting of a list of tuples where each tuple contains an image tensor and its label tensor.</p>
+</dd>
+<dt>in_duplication_factor (int)</dt><dd><p>Number of times an image is expected to be duplicated.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>Tuple[torch.Tensor, torch.Tensor]: A tuple containing the rearranged image tensor and its label tensor.</p>
+</dd>
+<dt>Raises:</dt><dd><p>ValueError: If the duplication factor provided is inconsistent with the number of duplicated images in the input data. If main structure is
+followed, this should never happen.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="evaluator-module">
+<h1>Evaluator module<a class="headerlink" href="#evaluator-module" title="Link to this heading"></a></h1>
+</section>
+<section id="module-losses_od.losses_od">
+<span id="losses-module"></span><h1>Losses module<a class="headerlink" href="#module-losses_od.losses_od" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="losses_od.losses_od.NTXentLoss">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">losses_od.losses_od.</span></span><span class="sig-name descname"><span class="pre">NTXentLoss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#losses_od.losses_od.NTXentLoss" title="Link to this definition"></a></dt>
+<dd><p>Implements the Normalized Temperature-scaled Cross-Entropy loss (<a class="reference external" href="https://paperswithcode.com/method/nt-xent">https://paperswithcode.com/method/nt-xent</a>) used for CSI training. Expects that
+the first half of the pair contain the first image of the image pair and the second half the second image of the image pair.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>in_temperature (float, optional)</dt><dd><p>The temperature scaling factor for the loss. Defaults to 0.5.</p>
+</dd>
+<dt>in_eps (float, optional)</dt><dd><p>A small epsilon value for numerical stability. Defaults to 1e-8.</p>
+</dd>
+<dt>in_clip_max (int, optional)</dt><dd><p>Clamps the maximum value to prevent overflow to infinity when applying torch.exp. Defaults to 80.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="losses_od.losses_od.NTXentLoss.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_embeddings</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#losses_od.losses_od.NTXentLoss.forward" title="Link to this definition"></a></dt>
+<dd><p>Compute the NT-Xent out_loss given the outputs tensor.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>in_embeddings (torch.Tensor)</dt><dd><p>Tensor representing the embeddings or representations.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><p>torch.Tensor: The computed NT-Xent loss.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="losses_od.losses_od.OdLossTotal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">losses_od.losses_od.</span></span><span class="sig-name descname"><span class="pre">OdLossTotal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#losses_od.losses_od.OdLossTotal" title="Link to this definition"></a></dt>
+<dd><p>A custom loss module that computes a weighted combination of NT-Xent loss,
+CrossEntropyLoss for shift classification, general classification, and a norm penalty.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>in_duplication_factor (int)</dt><dd><p>The factor by which the data is duplicated.</p>
+</dd>
+<dt>in_loss_weights (dict)</dt><dd><dl class="simple">
+<dt>Dictionary containing the weights for the different loss components:</dt><dd><ul class="simple">
+<li><p>‘weight_sim’: Weight for the NT-Xent similarity loss. Default is 0.0.</p></li>
+<li><p>‘weight_shift’: Weight for the shift classification loss. Default is 0.0.</p></li>
+<li><p>‘weight_cls’: Weight for the general classification loss. Default is 0.0.</p></li>
+<li><p>‘weight_norm’: Weight for the norm penalty. Default is 0.0.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt>in_lr_finder (bool)</dt><dd><p>Flag to indicate whether the loss is used for the torch_lr_finder module which needs one output tensor of the total loss.</p>
+</dd>
+</dl>
+</dd>
+<dt>Attributes:</dt><dd><dl class="simple">
+<dt>duplication_factor (int)</dt><dd><p>Stores the factor by which the data is duplicated.</p>
+</dd>
+<dt>loss_weights (dict)</dt><dd><p>Stores the weights for the different loss components.</p>
+</dd>
+<dt>loss_criterion_ntxent (NTXentLoss)</dt><dd><p>Criterion for the NT-Xent similarity loss.</p>
+</dd>
+<dt>loss_criterion_xent (CrossEntropyLoss)</dt><dd><p>Criterion for the shift and general classification losses.</p>
+</dd>
+<dt>active_losses (list)</dt><dd><p>List containing the active loss names based on their non-zero weights.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="losses_od.losses_od.OdLossTotal.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">in_model_predictions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">in_labels_shift</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">torch.Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">torch.Tensor</span></span></span><a class="headerlink" href="#losses_od.losses_od.OdLossTotal.forward" title="Link to this definition"></a></dt>
+<dd><p>Compute the combined loss given the model predictions.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><dl class="simple">
+<dt>in_model_predictions (dict)</dt><dd><dl class="simple">
+<dt>Dictionary containing model predictions for different tasks:</dt><dd><ul class="simple">
+<li><p>‘sim’: Tensor representing the embeddings or representations for similarity task.</p></li>
+<li><p>‘shift’: Tensor for shift classification task.</p></li>
+<li><p>‘cls’: Tensor for out-of-distribution classification task.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt>in_labels_shift (torch.Tensor)</dt><dd><p>Ground truth labels for shift classification.</p>
+</dd>
+</dl>
+</dd>
+<dt>Returns:</dt><dd><dl class="simple">
+<dt>dict: Dictionary containing computed losses:</dt><dd><ul class="simple">
+<li><p>‘loss_total’: The weighted combined loss.</p></li>
+<li><p>‘loss_sim’: Loss for the similarity task. Present if weight_sim &gt; 0.</p></li>
+<li><p>‘loss_shift’: Loss for the shift classification task. Present if weight_shift &gt; 0.</p></li>
+<li><p>‘loss_cls’: Loss for the out-of-distribution classification task. Present if weight_cls &gt; 0.</p></li>
+<li><p>‘loss_norm’: Norm penalty loss. Present if weight_norm &gt; 0.</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="model-handler-module">
+<h1>Model handler module<a class="headerlink" href="#model-handler-module" title="Link to this heading"></a></h1>
+</section>
+<section id="trainer-module">
+<h1>Trainer module<a class="headerlink" href="#trainer-module" title="Link to this heading"></a></h1>
+</section>
+<section id="utils-module">
+<h1>Utils module<a class="headerlink" href="#utils-module" title="Link to this heading"></a></h1>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to Outlier_detection_CSI’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Jvk.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
