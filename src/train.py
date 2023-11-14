@@ -34,7 +34,8 @@ data_setup_od = DataSetupOD(
     in_val_size=config["val_size"],
     in_target_class=config["target_class"],
     in_duplication_factor=config["duplication_factor"],
-    in_transforms=transforms_dict
+    in_transforms=transforms_dict,
+    in_sample_len=config["sample_len"]
 )
 
 # Initialize logger
