@@ -105,23 +105,8 @@ class MTTSingleClassCSIwav(DatasetFolder):
                 transformed_samples.append(transformed_sample)
             out_audio_minibatch = torch.stack(transformed_samples, dim=0)
 
-        out_audio_minibatch = torch.clamp(out_audio_minibatch, min=1e-5)
-
-        # Apply log scale to each Mel spectrogram in the batch
-        log_scaled_batch = torch.log1p(out_audio_minibatch)
-
-        # Normalize the log-scaled Mel spectrograms
-        min_log_val = log_scaled_batch.min()
-        max_log_val = log_scaled_batch.max()
-        if min_log_val == max_log_val:
-            # Avoid division by zero by setting the normalized batch to 0.5 (range is data is [0, 1])
-            normalized_log_scaled_batch = torch.full_like(log_scaled_batch, fill_value=0.5)
-        else:
-            # Perform the normalization as originally intended
-            normalized_log_scaled_batch = (log_scaled_batch - min_log_val) / (max_log_val - min_log_val)
-
         # Duplicate along channel axis to simulate RGB
-        out_audio_minibatch = normalized_log_scaled_batch.repeat(1, 3, 1, 1)
+        out_audio_minibatch = out_audio_minibatch.repeat(1, 3, 1, 1)
         return out_audio_minibatch, out_labels
 
 

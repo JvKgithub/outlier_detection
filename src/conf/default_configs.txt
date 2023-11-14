@@ -32,6 +32,8 @@ CIFAR-10 default train conf
         "weight_cls": 0.0,
         "weight_norm": 0.0
     }
+    "sample_rate": null,
+    "sample_len": null
 }
 
 MTT default train conf
@@ -88,7 +90,9 @@ CIFAR-10 default dataset evaluation
     "duplication_factor": 4,
     "device": "cuda",
     "num_workers": 0,
-    "path_data": "../data"
+    "path_data": "../data",
+    "sample_rate": null,
+    "sample_len": null
 }
 
 Default image evaluation (based on CIFAR-10)
@@ -102,7 +106,9 @@ Default image evaluation (based on CIFAR-10)
     "dataset_std": [0.2502190172672272, 0.24083183705806732, 0.2659754455089569],
     "duplication_factor": 4,
     "device": "cuda",
-    "path_data": "./example_files/cifar10/dog_0.png"
+    "path_data": "./example_files/cifar10/dog_0.png",
+    "sample_rate": null,
+    "sample_len": null
 }
 
 Default MTT dataset evaluation
