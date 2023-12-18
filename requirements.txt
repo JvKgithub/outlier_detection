@@ -1,6 +1,6 @@
 torchaudio==2.1.0+cu118
 torchvision==0.16.0+cu118
-torch==2.1.0+cu118
+torch==2.1.2
 torch-lr-finder==0.2.1
 torchaudio_augmentations
 Sphinx==7.2.6
